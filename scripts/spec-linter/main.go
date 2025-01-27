@@ -74,13 +74,13 @@ func main() {
 			fmt.Printf("fixed title: %v\n", newTitle)
 		}
 
-		// $id should have this format: "https://github.com/edatasheets/digital-datasheets/blob/main/part-spec/clock/oscillator.json"
+		// $id should have this format: "https://github.com/edatasheets/edatasheets/blob/main/part-spec/clock/oscillator.json"
 		v, ok = anyJson.Get("$id")
 		if !ok {
 			panic(fmt.Errorf("expecting $id key in %v", keyList))
 		}
 		idString := fmt.Sprintf("%v", v)
-		prefixPath := "https://github.com/edatasheets/digital-datasheets/blob/main/part-spec/"
+		prefixPath := "https://github.com/edatasheets/edatasheets/blob/main/part-spec/"
 		correctPrefix := strings.HasPrefix(idString, prefixPath)
 		filePieces := strings.Split(file, "/")
 		suffixPath := filepath.Join(filePieces[len(filePieces)-2], filePieces[len(filePieces)-1])
