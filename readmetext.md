@@ -74,7 +74,7 @@ A digital datasheet shall follow the international standard notation, YYYY-MM-DD
 
 ####  4.4	 Top Level Component Specification 
 
-Source: [component.json](https://github.com/edatasheets/digital-datasheets/blob/main/part-spec/component.json)
+Source: [component.json](https://github.com/edatasheets/edatasheets/blob/main/part-spec/component.json)
 
 |Property|Description|JSON Data Type|Required?|
 |:----|:----|:----|:----|
