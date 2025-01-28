@@ -4,7 +4,7 @@
 
 # Determine if running in GitHub Actions
 if [ -n "$GITHUB_WORKSPACE" ]; then
-  SRC="$GITHUB_WORKSPACE/digital-datasheets"
+  SRC="$GITHUB_WORKSPACE"
   DST="$GITHUB_WORKSPACE/edatasheets.github.io"
 else
   SRC=~/digital-datasheets

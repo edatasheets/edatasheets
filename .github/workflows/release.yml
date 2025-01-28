@@ -13,6 +13,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      - name: Checkout edatasheets.github.io
+        uses: actions/checkout@v4
+        with:
+          repository: edatasheets/edatasheets.github.io
+          path: edatasheets.github.io
 
       - name: Set up Go
         uses: actions/setup-go@v4
