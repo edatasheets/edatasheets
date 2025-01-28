@@ -1,8 +1,6 @@
-name: Release
+name: Release electronic datasheets standard
 
 on:
-  workflow_dispatch:
-
   release:
     types: [published]
 
@@ -37,10 +35,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-
-      - name: Generate release branch name
+      - name: Generate branch name
         id: generate_branch
-        run: echo "branch=release-$(date +%s)" >> $GITHUB_ENV
+        run: echo "branch=release-${{ github.event.release.tag_name }}" >> $GITHUB_ENV
 
       - name: Create Pull Request
         id: cpr
@@ -54,9 +51,12 @@ jobs:
           branch: ${{ env.branch }}
           delete-branch: true
           base: main
-          title: '[Example] Release'
+          title: 'Automatic Release - ${{ github.event.release.tag_name }}'
           body: |
-            This is an automated pull request to update the report for the new release.
+            This is an automated pull request generating a new electronic datasheets standard release.
+           
+            Release Notes:
+            ${{ github.event.release.body }}
           labels: |
             release
             automated pr
