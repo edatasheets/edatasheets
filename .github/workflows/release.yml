@@ -37,35 +37,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Commit changes
-        id: commit-changes
-        run: |
-          cd edatasheets.github.io
-          git config --global --unset-all user.name || true
-          git config --global --unset-all user.email || true
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          BRANCH_NAME="update-release-artifacts-$(date +%Y%m%d%H%M%S)"
-          git checkout -b $BRANCH_NAME
-          git add .
-          git commit -m "Update release artifacts"
-        env:
-          BRANCH_NAME: update-release-artifacts-$(date +%Y%m%d%H%M%S)
-
-      - name: Push changes
-        run: |
-          cd edatasheets.github.io
-          git push https://x-access-token:${{ secrets.PAT }}@github.com/willcalar91/release.test.edatasheet.github.io.git $BRANCH_NAME
-        env:
-          BRANCH_NAME: ${{ steps.commit-changes.outputs.BRANCH_NAME }}
-
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PAT }}
-          commit-message: "Update release artifacts"
-          branch: ${{ steps.commit-changes.outputs.BRANCH_NAME }}
-          title: "Update release artifacts"
-          body: "This PR updates the release artifacts."
-          base: main
-          path: edatasheets.github.io
+          commit-message: Create pull request
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: standard-release
+          delete-branch: true
+          title: '[Example] Release'
+          body: |
+            This is an automated pull request to update the report for the new release.
+          labels: |
+            release
+            automated pr
+          milestone: 1
+          draft: false
