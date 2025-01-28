@@ -37,6 +37,8 @@ jobs:
       - name: Commit changes
         run: |
           cd edatasheets.github.io
+          git config --global --unset-all user.name || true
+          git config --global --unset-all user.email || true
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           BRANCH_NAME="update-release-artifacts-$(date +%Y%m%d%H%M%S)"
