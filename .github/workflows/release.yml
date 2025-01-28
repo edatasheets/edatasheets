@@ -17,7 +17,7 @@ jobs:
       - name: Checkout edatasheets.github.io
         uses: actions/checkout@v4
         with:
-          repository: wcarrillo91/release.test.edatasheet.github.io
+          repository: willcalar91/release.test.edatasheet.github.io
           path: edatasheets.github.io
 
       - name: Set up Go
