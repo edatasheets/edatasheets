@@ -7,7 +7,7 @@ Defining a common digital datasheet specification reduces the burden for compone
 Part manufacturers create datasheets to document component information including performance, electrical characteristics, size, orientation, packaging, etc. Digital datasheets contain this information in a machine readable format.The objective of this specification is to create a uniform, machine-readable format for representing component datasheets.
 
 #### 1.2 Scope
-This document is intended for digital datasheet producers such as components vendors as well as people who will consume these digital datasheets to automate designs such as tool creators.The specification will include common classes of components used in designs. Some examples are included in the appendices to provide context for future additions to this specification.
+This document is intended for digital datasheet producers such as components vendors as well as people who will consume these electronic datasheets to automate designs such as tool creators.The specification will include common classes of components used in designs. Some examples are included in the appendices to provide context for future additions to this specification.
 
 #### 1.3 Keywords
 - Required: The field is required in the component digital datasheet.
@@ -20,7 +20,7 @@ This document is intended for digital datasheet producers such as components ven
 - JSON Schema: A media Type for Describing JSON Documents, [draft-bhutton-json-schema-00, December 2020](https://datatracker.ietf.org/doc/html/draft-bhutton-json-schema-00).
 - Terms, Definitions, and Letter Symbols for Microelectronic Devices, JESD99C – December 2012
 
-### 2. Working with Digital Datasheets 
+### 2. Working with Electronic Datasheets 
 
 #### 2.1 Digital Datasheet Distribution by Component Vendors
 A component e-datasheet released by a hardware component vendor can include one or multiple files. Multiple files are typically used when a single datasheet covers multiple parts from the same family, when a part is complex or, when a part has additional information, not in json format, such as footprints. In this case, the specification has a provision that enables vendors to capture common or core properties across all the parts in one file while using additional files to capture the changes between parts.
@@ -33,27 +33,27 @@ Electronic components distributors have agreements with hardware component vendo
 
 In a private distribution model, the e-datasheet is shared by a hardware component vendor to one or more select customers, for Intellectual Property (IP) protection. This may require an NDA between the parties involved. The e-datasheet can be shared through means like a private repository or a private database, or through encrypted emails.  With this model, the vendors have a good visibility of the customers using their e-datasheets and can directly notify them of updates through email.  It’s also recommended to provide a release document identifying e-datasheets changes from one release to the next.
 
-#### 2.2 Importing Digital Datasheets in a Part Library Management System
+#### 2.2 Importing Electronic Datasheets in a Part Library Management System
 Most companies doing hardware design rely on a Part Library Management (PLM) System to store information about electronic components. These systems are often linked to CAD tools to guide component selection during hardware design. Additionally, these systems have an important role in Bill of Materials (BOM) generation and purchasing. Therefore, a natural entry point for digital datasheet information is a PLM system.
 
-Given the importance of component accuracy in a PLM system, it is likely that companies will initially want some manual review of new digital datasheets before they are integrated into a shared PLM system. One suggested method of achieving this is to have an internal datasheet database that is connected to any datasheet repositories (public or private) that are used by that company. Updates can be manually pulled in and compared as new datasheets are available. Once the updates have been checked, new datasheet changes can be submitted to the internal database. This database would be indexed by internal part numbers that correspond to the digital datasheet.
+Given the importance of component accuracy in a PLM system, it is likely that companies will initially want some manual review of new electronic datasheets before they are integrated into a shared PLM system. One suggested method of achieving this is to have an internal datasheet database that is connected to any datasheet repositories (public or private) that are used by that company. Updates can be manually pulled in and compared as new datasheets are available. Once the updates have been checked, new datasheet changes can be submitted to the internal database. This database would be indexed by internal part numbers that correspond to the digital datasheet.
 
-Converting this internal company datasheet database to information in the PLM system can be done automatically because datasheets in the internal database have already been manually verified. To do this conversion, a one-time mapping file between properties in the digital datasheet schema and the specific properties in a company’s PLM is created. Companies can then write a simple generator script using this mapping file to convert digital datasheet entries to PLM properties. Additionally, as digital datasheets will likely contain new information not available in the PLM system, this information can be added or exist in a separate database alongside the PLM system. As tooling advances, these new properties can be leveraged to provide richer schematic validation. 
+Converting this internal company datasheet database to information in the PLM system can be done automatically because datasheets in the internal database have already been manually verified. To do this conversion, a one-time mapping file between properties in the digital datasheet schema and the specific properties in a company’s PLM is created. Companies can then write a simple generator script using this mapping file to convert digital datasheet entries to PLM properties. Additionally, as electronic datasheets will likely contain new information not available in the PLM system, this information can be added or exist in a separate database alongside the PLM system. As tooling advances, these new properties can be leveraged to provide richer schematic validation. 
 
 The advantage of this system is it leverages existing PLM systems, which are often deeply integrated with engineering workflows. However, it makes these PLM systems more efficient to generate and update.
 
-#### 2.3 Tools to Generate Digital Datasheets 
+#### 2.3 Tools to Generate Electronic Datasheets 
 The digital datasheet creator is an open-source tool that is available to make datasheet
 creation less time consuming. The tool can be found here: [datasheet creator](https://github.com/intel/digital-datasheet-creator). It consists of a series of template spreadsheets for each 
 part type that can be filled in and run through the creator script to generate a specification-compliant json datasheet file. 
 
-#### 2.3 Tools to Generate Digital Datasheets 
+#### 2.3 Tools to Generate Electronic Datasheets 
 The digital datasheet creator is an open-source tool that is available to make datasheet
 creation less time consuming. The tool can be found here: [datasheet creator](https://github.com/intel/digital-datasheet-creator). It consists of a series of template spreadsheets for each 
 part type that can be filled in and run through the creator script to generate a specification-compliant json datasheet file. 
 
 ### 3. Use Cases 
-Digital datasheets can be used for many applications. The list of use cases included here is not meant to be exhaustive and it is expected that new applications will be developed as more people start using these digital datasheets. Sample applications include automated hardware design checks to identify bugs earlier in the design cycle, automated hardware designs to speed up board development, components comparison to identify replacement components on a design. 
+Digital datasheets can be used for many applications. The list of use cases included here is not meant to be exhaustive and it is expected that new applications will be developed as more people start using these electronic datasheets. Sample applications include automated hardware design checks to identify bugs earlier in the design cycle, automated hardware designs to speed up board development, components comparison to identify replacement components on a design. 
 
 ### 4.Specifications
 
@@ -201,7 +201,7 @@ Source: [instanceSpec.json](https://github.com/edatasheets/edatasheets/blob/main
 
 |Property|Description|JSON Data Type|Required?|
 |:----|:----|:----|:----|
-|partName|name of the part defined in the digital datasheets specifications|String|Yes|
+|partName|name of the part defined in the electronic datasheets specifications|String|Yes|
 |instanceName|name of an instance of the part|String| |
 |instanceProperties|instance properties, as defined in the part specification|../common/coreProperties.json#/coreProperties| |
 
