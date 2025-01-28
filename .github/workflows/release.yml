@@ -39,14 +39,22 @@ jobs:
           git checkout -b $BRANCH_NAME
           git add .
           git commit -m "Update release artifacts"
+        env:
+          BRANCH_NAME: update-release-artifacts-$(date +%Y%m%d%H%M%S)
+
+      - name: Push changes
+        run: |
+          cd edatasheets.github.io
           git push https://x-access-token:${{ secrets.PAT }}@github.com/willcalar91/release.test.edatasheet.github.io.git $BRANCH_NAME
+        env:
+          BRANCH_NAME: ${{ steps.commit-changes.outputs.BRANCH_NAME }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PAT }}
           commit-message: "Update release artifacts"
-          branch: $BRANCH_NAME
+          branch: ${{ steps.commit-changes.outputs.BRANCH_NAME }}
           title: "Update release artifacts"
           body: "This PR updates the release artifacts."
           base: main
