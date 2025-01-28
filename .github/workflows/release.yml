@@ -37,6 +37,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+
+      - name: Generate release branch name
+        id: generate_branch
+        run: echo "branch=release-$(date +%s)" >> $GITHUB_ENV
+
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v7
@@ -46,7 +51,7 @@ jobs:
           committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: standard-release
+          branch: ${{ env.branch }}
           delete-branch: true
           base: main
           title: '[Example] Release'
@@ -55,6 +60,5 @@ jobs:
           labels: |
             release
             automated pr
-          milestone: 1
           draft: false
           path: edatasheets.github.io
