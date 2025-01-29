@@ -38,6 +38,11 @@ jobs:
         id: generate_branch
         run: echo "branch=release-${{ github.event.release.tag_name }}" >> $GITHUB_ENV
 
+      - name: Checkout to new branch
+        run: |
+          cd edatasheets.github.io
+          git checkout -b ${{ env.branch }}
+
       - name: Commit changes
         run: |
           cd edatasheets.github.io
