@@ -38,19 +38,21 @@ jobs:
         id: generate_branch
         run: echo "branch=release-${{ github.event.release.tag_name }}" >> $GITHUB_ENV
 
-      - name: Checkout to new branch
+      - name: Get release author
+        id: get_author
         run: |
-          cd edatasheets.github.io
-          git checkout -b ${{ env.branch }}
+          echo "author_name=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.event.release.tag_name }} | jq -r '.author.login')" >> $GITHUB_ENV
+          echo "author_email=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/${{ env.author_name }} | jq -r '.email')" >> $GITHUB_ENV
 
       - name: Commit changes
         run: |
           cd edatasheets.github.io
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b ${{ env.branch }}
+          git config --global user.name "${{ env.author_name }}"
+          git config --global user.email "${{ env.author_email }}"
           git add .
           git commit -m "Release ${{ github.event.release.tag_name }}"
-          git push https://x-access-token:${{ secrets.PAT }}@github.com/willcalar91/release.test.edatasheet.github.io.git ${{ env.branch }}
+          git push origin HEAD
 
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v3
