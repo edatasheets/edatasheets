@@ -29,11 +29,7 @@ jobs:
       - name: Run Readme generation script
         run: ./generate-readme.sh
         continue-on-error: true
-
-      - name: Warn if Readme generation script fails
-        if: failure()
-        run: echo "Warning: Readme generation script failed"
-
+        
       - name: Run release script
         run: bash release.sh
         env:
