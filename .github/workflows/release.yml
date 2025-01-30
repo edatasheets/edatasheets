@@ -56,6 +56,17 @@ jobs:
           git commit -m "Release ${{ github.event.release.tag_name }}"
           git push origin HEAD
 
+      - name: Create edatasheets Pull Request
+        run: |
+          gh pr create \
+            --title "Automatic Release - ${{ github.event.client_payload.release.tag_name }}" \
+            --body "This is an automated pull request generating a new electronic datasheets standard release.\n\nRelease Notes:\n${{ github.event.client_payload.release.body }}" \
+            --base main \
+            --head ${{ env.branch }} \
+            --label "release,automated pr" \
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+
       - name: Remote pull request dispatch edatasheet.github.io
         uses: peter-evans/repository-dispatch@v3
         with:
