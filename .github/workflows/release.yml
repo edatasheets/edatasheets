@@ -27,9 +27,12 @@ jobs:
           go-version: '1.17'
 
       - name: Run Readme generation script
-        run: bash readmegenscript.sh
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./generate-readme.sh
+        continue-on-error: true
+
+      - name: Warn if Readme generation script fails
+        if: failure()
+        run: echo "Warning: Readme generation script failed"
 
       - name: Run release script
         run: bash release.sh
