@@ -41,8 +41,14 @@ jobs:
       - name: Get release author
         id: get_author
         run: |
-          echo "author_name=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.event.release.tag_name }} | jq -r '.author.login')" >> $GITHUB_ENV
-          echo "author_email=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/${{ env.author_name }} | jq -r '.email')" >> $GITHUB_ENV
+          author_name=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.event.release.tag_name }} | jq -r '.author.login')
+          echo "author_name=${author_name}" >> $GITHUB_ENV
+          author_email=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/${author_name} | jq -r '.email')
+          if [ -z "$author_email" ] || [ "$author_email" == "null" ]; then
+            author_email="${author_name}@users.noreply.github.com"
+          fi
+          echo "author_email=${author_email}" >> $GITHUB_ENV
+
 
       - name: Commit changes
         run: |
