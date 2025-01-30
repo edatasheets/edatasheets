@@ -61,6 +61,7 @@ jobs:
           git checkout -b ${{ env.branch }}
           git config --global user.name "${{ env.author_name }}"
           git config --global user.email "${{ env.author_email }}"
+          git rm --cached edatasheets.github.io
           git add .
           git commit -m "Release ${{ github.event.release.tag_name }}"
           git push origin HEAD
