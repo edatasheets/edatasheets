@@ -46,9 +46,18 @@ jobs:
           fi
           echo "author_email=${author_email}" >> $GITHUB_ENV
           
-      - name: Commit changes
+      - name: Commit changes edatasheets.github.io
         run: |
           cd edatasheets.github.io
+          git checkout -b ${{ env.branch }}
+          git config --global user.name "${{ env.author_name }}"
+          git config --global user.email "${{ env.author_email }}"
+          git add .
+          git commit -m "Release ${{ github.event.release.tag_name }}"
+          git push origin HEAD
+
+      - name: Commit changes edatasheets
+        run: |
           git checkout -b ${{ env.branch }}
           git config --global user.name "${{ env.author_name }}"
           git config --global user.email "${{ env.author_email }}"
