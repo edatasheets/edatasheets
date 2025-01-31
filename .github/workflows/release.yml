@@ -76,8 +76,8 @@ jobs:
       - name: Create edatasheets Pull Request
         run: |
           gh pr create \
-            --title "Automatic Release - ${{ github.event.client_payload.release.tag_name }}" \
-            --body "This is an automated pull request generating a new electronic datasheets standard release.\n\nRelease Notes:\n${{ github.event.client_payload.release.body }}" \
+            --title "Automatic Release - ${{ github.event.release.tag_name }}" \
+            --body "This is an automated pull request generating a new electronic datasheets standard release.\n\nRelease Notes:\n${{ github.event.release.body }}" \
             --base main \
             --head ${{ env.branch }}
         env:
@@ -93,7 +93,7 @@ jobs:
             {
               "release":{
                 "tag_name":"${{ github.event.release.tag_name }}",
-                "body":"${{ github.event.release.body }}"
+                "body":"${{ github.event.release.body | tojson }}"
               }
             }
             
