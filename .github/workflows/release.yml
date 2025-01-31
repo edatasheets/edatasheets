@@ -27,7 +27,7 @@ jobs:
           go-version: '1.17'
 
       - name: Run Readme generation script
-        run: ./readmegenscript.sh
+        run: bash readmegenscript.sh
         continue-on-error: true
         
       - name: Run release script
