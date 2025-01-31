@@ -15,7 +15,6 @@ fi
 cp -r "$SRC/part-spec" "$SRC/support-docs" "$SRC/examples" "$SRC/LICENSE" "$DST"
 
 mv "$DST/support-docs/README.md" "$DST"
-cp -rf "$DST/README.md" "$SRC/support-docs/README.md"
 rm -r "$DST/support-docs"
 
 # Rename the source information in the README with the official release github URI
