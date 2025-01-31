@@ -66,33 +66,35 @@ jobs:
       - name: Commit changes edatasheets
         run: |
           git checkout -b ${{ env.branch }}
+          git status
           git config --global user.name "${{ env.author_name }}"
           git config --global user.email "${{ env.author_email }}"
           git add .          
           git commit -m "Release ${{ github.event.release.tag_name }}"
           git push origin HEAD
-      - name: Create edatasheets Pull Request
-        run: |
-          gh pr create \
-            --title "Automatic Release - ${{ github.event.client_payload.release.tag_name }}" \
-            --body "This is an automated pull request generating a new electronic datasheets standard release.\n\nRelease Notes:\n${{ github.event.client_payload.release.body }}" \
-            --base main \
-            --head ${{ env.branch }} \
-            --label "release,automated pr" \
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+          
+      #- name: Create edatasheets Pull Request
+      #  run: |
+      #    gh pr create \
+      #      --title "Automatic Release - ${{ github.event.client_payload.release.tag_name }}" \
+      #      --body "This is an automated pull request generating a new electronic datasheets standard release.\n\nRelease Notes:\n${{ github.event.client_payload.release.body }}" \
+      #      --base main \
+      #      --head ${{ env.branch }} \
+      #      --label "release,automated pr" \
+      #  env:
+      #    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
 
-      - name: Remote pull request dispatch edatasheet.github.io
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.PAT }}
-          repository: willcalar91/release.test.edatasheet.github.io
-          event-type: create-release-pull-request
-          client-payload: |-
-            {
-              "release":{
-                "tag_name":"${{ github.event.release.tag_name }}",
-                "body":"${{ github.event.release.body }}"
-              }
-            }
+      #- name: Remote pull request dispatch edatasheet.github.io
+      #  uses: peter-evans/repository-dispatch@v3
+      #  with:
+      #    token: ${{ secrets.PAT }}
+      #    repository: willcalar91/release.test.edatasheet.github.io
+      #    event-type: create-release-pull-request
+      #    client-payload: |-
+      #      {
+      #        "release":{
+      #          "tag_name":"${{ github.event.release.tag_name }}",
+      #          "body":"${{ github.event.release.body }}"
+      #        }
+      #      }
             
