@@ -80,7 +80,6 @@ jobs:
             --body "This is an automated pull request generating a new electronic datasheets standard release.\n\nRelease Notes:\n${{ github.event.client_payload.release.body }}" \
             --base main \
             --head ${{ env.branch }} \
-            --label "release,automated pr" \
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
 
