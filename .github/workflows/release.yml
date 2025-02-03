@@ -97,7 +97,7 @@ jobs:
             {
               "release": {
                 "tag_name":"${{ github.event.release.tag_name }}",
-                "body":"${{ESCAPED_BODY}}"
+                "body":"${ESCAPED_BODY}"
               }
             }
             
