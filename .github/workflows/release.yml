@@ -89,10 +89,11 @@ jobs:
           token: ${{ secrets.PAT }}
           repository: willcalar91/release.test.edatasheet.github.io
           event-type: create-release-pull-request
-          client-payload: ${{ toJson({
-            release: {
-              tag_name: github.event.release.tag_name,
-              body: github.event.release.body
+          client-payload: |-
+            {
+              "release": {
+                "tag_name":"${{ github.event.release.tag_name }}",
+                "body":"${{ toJSON(github.event.release.body)}}"
+              }
             }
-          }) }}
             
