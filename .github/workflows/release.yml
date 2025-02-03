@@ -85,7 +85,7 @@ jobs:
 
       - name: Escaped body
         id: generate_body
-        run: echo "ESCAPED_BODY=$(echo "${{ github.event.release.body }}" | jq -R .)" >> $GITHUB_ENV
+        run: echo "ESCAPED_BODY=$(echo \"${{ github.event.release.body }}\" | jq -Rs . | sed 's/\\r//g')" >> $GITHUB_ENV
 
       - name: Remote pull request dispatch edatasheet.github.io
         uses: peter-evans/repository-dispatch@v3
