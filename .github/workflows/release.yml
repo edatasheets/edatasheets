@@ -83,6 +83,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
 
+      - name: Escaped body
+        id: generate_body
+        run: echo "ESCAPED_BODY=$(echo "${{ github.event.release.body }}" | jq -R .)" >> $GITHUB_ENV
+
       - name: Remote pull request dispatch edatasheet.github.io
         uses: peter-evans/repository-dispatch@v3
         with:
@@ -93,7 +97,7 @@ jobs:
             {
               "release": {
                 "tag_name":"${{ github.event.release.tag_name }}",
-                "body":"${{ toJSON(github.event.release.body)}}"
+                "body":"${{ESCAPED_BODY}}"
               }
             }
             
