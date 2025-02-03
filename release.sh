@@ -3,8 +3,8 @@
 # Run the readmegenscript
 
 
-SRC=~/Documents/digital-datasheets
-DST=~/Documents/edatasheets.github.io
+SRC=${SRC:-~/Documents/digital-datasheets}
+DST=${DST:-~/Documents/edatasheets.github.io}
 
 # TODO: copy README too
 cp -r "$SRC/part-spec" "$SRC/support-docs" "$SRC/examples" "$SRC/LICENSE" "$DST"
