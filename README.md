@@ -1,12 +1,12 @@
 # Digital Datasheet Properties
 
 This repository contains information about the format and properties
-of digital datasheets for a variety of component types.
+of electronic datasheets for a variety of component types.
 
 Document types include:
 * Specification for component properties
 * Specification for pin properties
-* Sample .json format for different types of digital datasheets
+* Sample .json format for different types of electronic datasheets
 
 # Contributing
 
@@ -18,7 +18,7 @@ change before submitting a PR.
 
 # Releasing
 
-A new version of digital datasheets is officially released by merging a PR with 
+A new version of electronic datasheets is officially released by merging a PR with 
 changes for that version into the release repo: <https://github.com/edatasheets/edatasheets.github>
 
 The release.sh script automates copying the appropriate files, generating a new

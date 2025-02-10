@@ -2,7 +2,6 @@
 
 # Run the readmegenscript
 
-
 SRC=${SRC:-~/Documents/digital-datasheets}
 DST=${DST:-~/Documents/edatasheets.github.io}
 
