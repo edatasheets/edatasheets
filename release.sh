@@ -2,14 +2,8 @@
 
 # Run the readmegenscript
 
-# Determine if running in GitHub Actions
-if [ -n "$GITHUB_WORKSPACE" ]; then
-  SRC="$GITHUB_WORKSPACE"
-  DST="$GITHUB_WORKSPACE/edatasheets.github.io"
-else
-  SRC=~/digital-datasheets
-  DST=~/edatasheets.github.io
-fi
+SRC=${SRC:-~/Documents/digital-datasheets}
+DST=${DST:-~/Documents/edatasheets.github.io}
 
 # TODO: copy README too
 cp -r "$SRC/part-spec" "$SRC/support-docs" "$SRC/examples" "$SRC/LICENSE" "$DST"
