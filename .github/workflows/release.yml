@@ -3,8 +3,6 @@ name: Remote pull request edatasheet.github.io
 on:
   release:
     types: [published]
-  
-  push:
 
 jobs:
   create-pull-request:
@@ -43,76 +41,73 @@ jobs:
           SRC: ${{ github.workspace }}
           DST: ${{ github.workspace }}/edatasheets.github.io
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Print changes in supports-docs/README.md
-        run: git diff support-docs/README.md
 
-      # - name: Generate release branch name
-      #   id: generate_branch
-      #   run: echo "branch=release-${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+      - name: Generate release branch name
+        id: generate_branch
+        run: echo "branch=release-${{ github.event.release.tag_name }}" >> $GITHUB_ENV
 
-      # - name: Get release author
-      #   id: get_author
-      #   run: |
-      #     author_name=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.event.release.tag_name }} | jq -r '.author.login')
-      #     echo "author_name=${author_name}" >> $GITHUB_ENV
-      #     author_email=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/${author_name} | jq -r '.email')
-      #     if [ -z "$author_email" ] || [ "$author_email" == "null" ]; then
-      #       author_email="${author_name}@users.noreply.github.com"
-      #     fi
-      #     echo "author_email=${author_email}" >> $GITHUB_ENV
+      - name: Get release author
+        id: get_author
+        run: |
+          author_name=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.event.release.tag_name }} | jq -r '.author.login')
+          echo "author_name=${author_name}" >> $GITHUB_ENV
+          author_email=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/${author_name} | jq -r '.email')
+          if [ -z "$author_email" ] || [ "$author_email" == "null" ]; then
+            author_email="${author_name}@users.noreply.github.com"
+          fi
+          echo "author_email=${author_email}" >> $GITHUB_ENV
           
-      # - name: Commit changes edatasheets.github.io
-      #   run: |
-      #     cd edatasheets.github.io
-      #     git checkout -b ${{ env.branch }}
-      #     git config --global user.name "${{ env.author_name }}"
-      #     git config --global user.email "${{ env.author_email }}"
-      #     git add .
-      #     git commit -m "Release ${{ github.event.release.tag_name }}"
-      #     git push origin HEAD
+      - name: Commit changes edatasheets.github.io
+        run: |
+          cd edatasheets.github.io
+          git checkout -b ${{ env.branch }}
+          git config --global user.name "${{ env.author_name }}"
+          git config --global user.email "${{ env.author_email }}"
+          git add .
+          git commit -m "Release ${{ github.event.release.tag_name }}"
+          git push origin HEAD
 
-      # - name: Remove edatasheets.github.io directory
-      #   run: rm -rf edatasheets.github.io
+      - name: Remove edatasheets.github.io directory
+        run: rm -rf edatasheets.github.io
 
-      # - name: Commit changes edatasheets
-      #   run: |
-      #     git checkout -b ${{ env.branch }}
-      #     git status
-      #     git config --global user.name "${{ env.author_name }}"
-      #     git config --global user.email "${{ env.author_email }}"
-      #     git add .          
-      #     git commit -m "Release ${{ github.event.release.tag_name }}"
-      #     git push origin HEAD
+      - name: Commit changes edatasheets
+        run: |
+          git checkout -b ${{ env.branch }}
+          git status
+          git config --global user.name "${{ env.author_name }}"
+          git config --global user.email "${{ env.author_email }}"
+          git add .          
+          git commit -m "Release ${{ github.event.release.tag_name }}"
+          git push origin HEAD
           
-      # - name: Create edatasheets Pull Request
-      #   run: |
-      #     gh pr create \
-      #       --title "Automatic Release - ${{ github.event.release.tag_name }}" \
-      #       --body "This is an automated pull request generating a new electronic datasheets standard release.\n\n[Release Notes](https://github.com/${{ github.repository }}/releases/tag/${{ github.event.release.tag_name }})" \
-      #       --base main \
-      #       --head ${{ env.branch }}
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+      - name: Create edatasheets Pull Request
+        run: |
+          gh pr create \
+            --title "Automatic Release - ${{ github.event.release.tag_name }}" \
+            --body "This is an automated pull request generating a new electronic datasheets standard release.\n\n[Release Notes](https://github.com/${{ github.repository }}/releases/tag/${{ github.event.release.tag_name }})" \
+            --base main \
+            --head ${{ env.branch }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
 
-      # - name: Remote pull request dispatch edatasheet.github.io
-      #   uses: peter-evans/repository-dispatch@v3
-      #   with:
-      #     token: ${{ secrets.PAT }}
-      #     repository: edatasheets/edatasheets.github.io
-      #     event-type: create-release-pull-request
-      #     client-payload: |-
-      #       {
-      #         "release": {
-      #           "tag_name":"${{ github.event.release.tag_name }}"
-      #         }
-      #       }
-      # - name: Remove created branches if failed
-      #   if: failure()
-      #   run: |
-      #     git push origin --delete ${{ env.branch }}
-      #     cd edatasheets.github.io
-      #     git push origin --delete ${{ env.branch }}
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Remote pull request dispatch edatasheet.github.io
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PAT }}
+          repository: edatasheets/edatasheets.github.io
+          event-type: create-release-pull-request
+          client-payload: |-
+            {
+              "release": {
+                "tag_name":"${{ github.event.release.tag_name }}"
+              }
+            }
+      - name: Remove created branches if failed
+        if: failure()
+        run: |
+          git push origin --delete ${{ env.branch }}
+          cd edatasheets.github.io
+          git push origin --delete ${{ env.branch }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
