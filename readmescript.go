@@ -180,7 +180,7 @@ func processComponentOption(titlePrefix, title string, link source, opt componen
 	fmt.Println("|:----|:----|:----|:----|")
 	for _, name := range propList {
 		prop := propMap[name]
-		required := " "
+		required := "No"
 		if requiredSet[name] {
 			required = "Yes"
 		}
