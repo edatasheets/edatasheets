@@ -45,7 +45,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Print changes in supports-docs/README.md
-        run: git diff supports-docs/README.md
+        run: git diff support-docs/README.md
 
       # - name: Generate release branch name
       #   id: generate_branch
