@@ -72,7 +72,7 @@ Source: [component.json](https://github.com/edatasheets/digital-datasheets/blob/
 
 |Property|Description|JSON Data Type|Required?|
 |:----|:----|:----|:----|
-|componentID|methods for identifying the version of the digital datasheet|./common/componentID.json#/componentID|Yes|
+|componentID|methods for identifying the version of the electronic datasheet|./common/componentID.json#/componentID|Yes|
 |coreProperties|core component properties as defined by the specific component spec file|./common/coreProperties.json#/coreProperties|No|
 |pins|array of pin objects with associated properties|./common/pinSpec.json#/pinSpec|No |
 |package|component package information|./common/package.json#/package|No|

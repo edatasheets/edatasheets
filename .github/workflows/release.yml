@@ -25,9 +25,14 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: '1.17'
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
       - name: Run Readme generation script
-        run: bash readmegenscript.sh
+        run: python readmegenscript.py
         continue-on-error: true
         
       - name: Run release script
