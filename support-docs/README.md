@@ -1,17 +1,16 @@
 ## Background
 ### 1 Introduction 
-As the demand for hardware design automation tools increases, there is a need for machine readable datasheets. 
-Defining a common digital datasheet specification reduces the burden for component vendors to deliver multiple datasheets to support different tools and encourages reuse of tools across multiple designs. 
+As the demand for hardware design automation tools grows, the need for machine-readable datasheets becomes more critical. Establishing a standardized Electronic Datasheet (EDS) specification alleviates the burden on component vendors to produce multiple datasheets for various tools, promoting the reuse of tools across different designs.
 
 #### 1.1 Objectives
-Part manufacturers create datasheets to document component information including performance, electrical characteristics, size, orientation, packaging, etc. Digital datasheets contain this information in a machine readable format.The objective of this specification is to create a uniform, machine-readable format for representing component datasheets.
+Component manufacturers produce datasheets to document various details about their components, such as performance, electrical characteristics, size, orientation, and packaging. EDS provide this information in a machine-readable format. The goal of this specification is to establish a standardized, machine-readable format for representing component datasheets.
 
 #### 1.2 Scope
-This document is intended for digital datasheet producers such as components vendors as well as people who will consume these electronic datasheets to automate designs such as tool creators.The specification will include common classes of components used in designs. Some examples are included in the appendices to provide context for future additions to this specification.
+This document is designed for EDS producers, such as component vendors, and for individuals who will use EDS to automate designs, such as tool creators. The specification will cover common classes of components used in designs. Examples are included in the appendices to provide context for future additions to this specification.
 
 #### 1.3 Keywords
-- Required: The field is required in the component digital datasheet.
-- Optional: The field may or may not be included in the component digital datasheet.
+- Required: The field is required in the EDS.
+- Optional: The field may or may not be included in the EDS.
 - Shall: Indicates a mandatory requirement.
 - May: Indicates an optional requirement.
 
@@ -22,46 +21,41 @@ This document is intended for digital datasheet producers such as components ven
 
 ### 2. Working with Electronic Datasheets 
 
-#### 2.1 Digital Datasheet Distribution by Component Vendors
-A component e-datasheet released by a hardware component vendor can include one or multiple files. Multiple files are typically used when a single datasheet covers multiple parts from the same family, when a part is complex or, when a part has additional information, not in json format, such as footprints. In this case, the specification has a provision that enables vendors to capture common or core properties across all the parts in one file while using additional files to capture the changes between parts.
+#### 2.1 Electronic Datasheet Distribution by Component Vendors
+EDS released by a hardware component vendor can include one or multiple files. Multiple files are typically used when a single datasheet covers multiple parts from the same family, when a part is complex or, when a part has additional information, not in JSON format, such as footprints. In this case, the specification has a provision that enables vendors to capture common or core properties across all the parts in one file while using additional files to capture the changes between parts.
 
-There are multiple existing models for hardware component vendors to distribute their parts datasheets. The recommendation is for these vendors to leverage these existing models for e-datasheets. Existing models include private and public distributions directly from the vendors or through an electronic components’ distributor.
+There are multiple existing models for hardware component vendors to distribute their parts datasheets. The recommendation is for these vendors to leverage these existing models for EDS. Existing models include private and public distributions directly from the vendors or through an electronic components’ distributor.
 
-In a public release, the hardware component vendor makes their latest e-datasheets available to the public, generally, through a public website. An example of this might be a Github repository where each vendor has a repository. The e-datasheets can be directly downloaded through the website without any requirements, and customers can optionally add their contact information to be notified about updates in the e-datasheets. 
+In a public release, the hardware component vendor makes their latest EDS available to the public, generally, through a public website. An example of this might be a GitHub repository where each vendor has a repository. The EDS can be directly downloaded through the website without any requirements, and customers can optionally add their contact information to be notified about updates in the EDS. 
 
-Electronic components distributors have agreements with hardware component vendors to distribute their products to customers.  In the existing model, distributors either include a local copy of the component datasheet to their website or add links to the datasheets on the vendor’s website.  In the case of e-datasheets, the recommendation is to use the later model, with an e-datasheet link always pointing to the latest release.  The goal is to avoid a situation where copies of local e-datasheet become out of sync with the latest release. 
+Electronic components distributors have agreements with hardware component vendors to distribute their products to customers.  In the existing model, distributors either include a local copy of the component datasheet to their website or add links to the datasheets on the vendor’s website.  In the case of EDS, the recommendation is to use the later model, with an EDS link always pointing to the latest release.  The goal is to avoid a situation where copies of local EDS become out of sync with the latest release. 
 
-In a private distribution model, the e-datasheet is shared by a hardware component vendor to one or more select customers, for Intellectual Property (IP) protection. This may require an NDA between the parties involved. The e-datasheet can be shared through means like a private repository or a private database, or through encrypted emails.  With this model, the vendors have a good visibility of the customers using their e-datasheets and can directly notify them of updates through email.  It’s also recommended to provide a release document identifying e-datasheets changes from one release to the next.
+In a private distribution model, the EDS is shared by a hardware component vendor to one or more select customers, for Intellectual Property (IP) protection. This may require an NDA between the parties involved. The EDS can be shared through means like a private repository or a private database, or through encrypted emails.  With this model, the vendors have a good visibility of the customers using their EDS and can directly notify them of updates through email.  It’s also recommended to provide a release document identifying EDS changes from one release to the next.
 
 #### 2.2 Importing Electronic Datasheets in a Part Library Management System
-Most companies doing hardware design rely on a Part Library Management (PLM) System to store information about electronic components. These systems are often linked to CAD tools to guide component selection during hardware design. Additionally, these systems have an important role in Bill of Materials (BOM) generation and purchasing. Therefore, a natural entry point for digital datasheet information is a PLM system.
+Most companies doing hardware design rely on a Part Library Management (PLM) System to store information about electronic components. These systems are often linked to CAD tools to guide component selection during hardware design. Additionally, these systems have an important role in Bill of Materials (BOM) generation and purchasing. Therefore, a natural entry point for EDS information is a PLM system.
 
-Given the importance of component accuracy in a PLM system, it is likely that companies will initially want some manual review of new electronic datasheets before they are integrated into a shared PLM system. One suggested method of achieving this is to have an internal datasheet database that is connected to any datasheet repositories (public or private) that are used by that company. Updates can be manually pulled in and compared as new datasheets are available. Once the updates have been checked, new datasheet changes can be submitted to the internal database. This database would be indexed by internal part numbers that correspond to the digital datasheet.
+Given the importance of component accuracy in a PLM system, it is likely that companies will initially want some manual review of new EDS before they are integrated into a shared PLM system. One suggested method of achieving this is to have an internal datasheet database that is connected to any datasheet repositories (public or private) that are used by that company. Updates can be manually pulled in and compared as new datasheets are available. Once the updates have been checked, new datasheet changes can be submitted to the internal database. This database would be indexed by internal part numbers that correspond to the EDS.
 
-Converting this internal company datasheet database to information in the PLM system can be done automatically because datasheets in the internal database have already been manually verified. To do this conversion, a one-time mapping file between properties in the digital datasheet schema and the specific properties in a company’s PLM is created. Companies can then write a simple generator script using this mapping file to convert digital datasheet entries to PLM properties. Additionally, as electronic datasheets will likely contain new information not available in the PLM system, this information can be added or exist in a separate database alongside the PLM system. As tooling advances, these new properties can be leveraged to provide richer schematic validation. 
+Converting this internal company datasheet database to information in the PLM system can be done automatically because datasheets in the internal database have already been manually verified. To do this conversion, a one-time mapping file between properties in the EDS schema and the specific properties in a company’s PLM is created. Companies can then write a simple generator script using this mapping file to convert EDS entries to PLM properties. Additionally, as EDS will likely contain new information not available in the PLM system, this information can be added or exist in a separate database alongside the PLM system. As tooling advances, these new properties can be leveraged to provide richer schematic validation. 
 
 The advantage of this system is it leverages existing PLM systems, which are often deeply integrated with engineering workflows. However, it makes these PLM systems more efficient to generate and update.
 
 #### 2.3 Tools to Generate Electronic Datasheets 
-The digital datasheet creator is an open-source tool that is available to make datasheet
+The Digital Datasheet Creator (DDC) is an open-source tool that is available to make datasheet
 creation less time consuming. The tool can be found here: [datasheet creator](https://github.com/intel/digital-datasheet-creator). It consists of a series of template spreadsheets for each 
-part type that can be filled in and run through the creator script to generate a specification-compliant json datasheet file. 
-
-#### 2.3 Tools to Generate Electronic Datasheets 
-The digital datasheet creator is an open-source tool that is available to make datasheet
-creation less time consuming. The tool can be found here: [datasheet creator](https://github.com/intel/digital-datasheet-creator). It consists of a series of template spreadsheets for each 
-part type that can be filled in and run through the creator script to generate a specification-compliant json datasheet file. 
+part type that can be filled in and run through the creator script to generate a specification-compliant JSON datasheet file. 
 
 ### 3. Use Cases 
-Digital datasheets can be used for many applications. The list of use cases included here is not meant to be exhaustive and it is expected that new applications will be developed as more people start using these electronic datasheets. Sample applications include automated hardware design checks to identify bugs earlier in the design cycle, automated hardware designs to speed up board development, components comparison to identify replacement components on a design. 
+EDS can be used for many applications. The list of use cases included here is not meant to be exhaustive and it is expected that new applications will be developed as more people start using these EDS. Sample applications include automated hardware design checks to identify bugs earlier in the design cycle, automated hardware designs to speed up board development, components comparison to identify replacement components on a design. 
 
 ### 4.Specifications
 
-#### 4.1 Digital Datasheet Format
-A digital datasheet shall be written in the JSON (JavaScript Object Notation) format. The specification is written in JSON schema to facilitate validation of a JSON datasheet. 
+#### 4.1 Electronic Datasheet Format
+EDS shall be written in the JSON (JavaScript Object Notation) format. The specification is written in JSON schema to facilitate validation of a JSON datasheet. 
 
 #### 4.2 Required Information.
-A digital datasheet shall include the following information:
+EDS shall include the following information:
 - The manufacturer’s name
 - The Manufacturer Part Number (MPN)
 - Information to identify the source datasheet
@@ -70,25 +64,24 @@ A digital datasheet shall include the following information:
 - List of Component Pins as defined by the specification.
 
 #### 4.3 Date Format
-A digital datasheet shall follow the international standard notation, YYYY-MM-DD.
+EDS shall follow the international standard notation, YYYY-MM-DD.
 
-####  4.4	 Top Level Component Specification 
+####  4.4	 Top Level Component Specification
 
-Source: [component.json](https://github.com/edatasheets/edatasheets/blob/main/part-spec/component.json)
+Source: [component.json](https://github.com/edatasheets/digital-datasheets/blob/main/part-spec/component.json)
 
 |Property|Description|JSON Data Type|Required?|
 |:----|:----|:----|:----|
-|componentID|methods for identifying the version of the digital datasheet|./common/componentID.json#/componentID|Yes|
+|componentID|methods for identifying the version of the electronic datasheet|./common/componentID.json#/componentID|Yes|
 |coreProperties|core component properties as defined by the specific component spec file|./common/coreProperties.json#/coreProperties|No|
 |pins|array of pin objects with associated properties|./common/pinSpec.json#/pinSpec|No |
 |package|component package information|./common/package.json#/package|No|
 |register|register information|./common/register.json#/register|No|
 |thermal|component temperature and thermal resistance information|./common/thermal.json#/thermal|No|
-|componentPropertyExternalFiles|external files that describe key component properties. External files can be used in lieu of defining core properties, pins, and package information in the same file|#/$defs/externalFileMap|No|
+|componentPropertyExternalFiles|external files that describe key component properties. External files can be used in lieu of defining core properties, pins, and package information in the same file|./common/externalFileMap.json#/externalFileMap|No|
 |additionalSpecExternalFiles|external files that contain information outside of the json spec. Examples include layout, simulation, etc.|./common/externalFile.json#/externalFile|No|
 |reliability|reliability information about the component|./common/reliability.json#/reliability|No|
 |powerSequence|information about component power sequencing|./common/powerSequence.json#/powerSequenceTable|No|
-
 ### 4.5	 Common
 
 ####  4.5.1	 Specification To Capture Information To Identify Components
@@ -101,8 +94,8 @@ Source: [componentID.json](https://github.com/edatasheets/edatasheets/blob/main/
 |manufacturer|company that manufactures the part|String|Yes|
 |componentName|base part name that describes the form and fit of a component|String| |
 |orderableMPN|orderable manufacturer part numbers, including packing and software information|array of String|Yes|
-|sourceDatasheetID|methods for identifying the human-readable source information for a digital datasheet|#/$defs/sourceDatasheetID|Yes|
-|digitalDatasheetID|methods for identifying the version of the digital datasheet|#/$defs/digitalDatasheetID|Yes|
+|sourceDatasheetID|methods for identifying the human-readable source information for a electronic datasheet|#/$defs/sourceDatasheetID|Yes|
+|digitalDatasheetID|methods for identifying the version of the electronic datasheet|#/$defs/digitalDatasheetID|Yes|
 |status|production status of a component|String| |
 |complianceList|list of standards the part complies with|array of String| |
 
@@ -110,9 +103,9 @@ Source: [componentID.json](https://github.com/edatasheets/edatasheets/blob/main/
 
 |Property|Description|JSON Data Type|Required?|
 |:----|:----|:----|:----|
-|publishedDate|date the digital datasheet was published|String| |
-|eDatasheetSpecRevision|revision of the digital datasheet specifications used to create the digital datasheet|String|Yes|
-|guid|vendor defined guid (see https://www.guidgenerator.com/) to uniquely identify digital datasheet version|String| |
+|publishedDate|date the electronic datasheet was published|String| |
+|eDatasheetSpecRevision|revision of the electronic datasheet specifications used to create the electronic datasheet|String|Yes|
+|guid|vendor defined guid (see https://www.guidgenerator.com/) to uniquely identify electronic datasheet version|String| |
 
 ####  4.5.3	 SourceDatasheetID
 
@@ -173,7 +166,22 @@ Source: [externalFile.json](https:/github.com/edatasheets/edatasheets/blob/main/
 |standardReferenced|optional, name of the standard the file is written in|String| |
 |fileURI|URI linking to the CAD file|String| |
 
-####  4.5.8	 Specification Of a Graph
+####  4.5.8	 Specification For Referencing An External File For Different Components
+
+Source: [externalFileMap.json](https://github.com/edatasheets/edatasheets/blob/main/part-spec/common/externalFileMap.json)
+
+|Property|Description|JSON Data Type|Required?|
+|:----|:----|:----|:----|
+|coreProperties|core component properties as defined by the specific component spec file. These properties are described by the common part of the part number|../common/externalFile.json#/externalFile| |
+|additionalCoreProperties|core component properties as defined by the specific component spec file. These properties are described by the changing part of the part number|../common/externalFile.json#/externalFile| |
+|pins|pin properties specified by the pin spec file|../common/externalFile.json#/externalFile| |
+|package|package information specified by the package spec file|../common/externalFile.json#/externalFile| |
+|powerSequence|information about component power sequencing|../common/externalFile.json#/externalFile| |
+|register|register information|../common/externalFile.json#/externalFile| |
+|thermal|component temperature and thermal resistance information|../common/externalFile.json#/externalFile| |
+|reliability|reliability information about the component|../common/externalFile.json#/externalFile| |
+
+####  4.5.9	 Specification Of a Graph
 
 Source: [graph.json](https:/github.com/edatasheets/edatasheets/blob/main/part-spec/common/graph.json)
 
@@ -187,7 +195,7 @@ Source: [graph.json](https:/github.com/edatasheets/edatasheets/blob/main/part-sp
 |numberOfCurves|total number of curves in graph|Number| |
 |curve|data represented by one or more curves in a graph|array of #/$defs/curve| |
 
-####  4.5.9	 Curve
+####  4.5.10	 Curve
 
 |Property|Description|JSON Data Type|Required?|
 |:----|:----|:----|:----|
@@ -195,7 +203,7 @@ Source: [graph.json](https:/github.com/edatasheets/edatasheets/blob/main/part-sp
 |xData|x-axis values of the curve|array of Number| |
 |yData|y-axis values of the curve|array of Number| |
 
-####  4.5.10	 Specification Of An Instance In a Part
+####  4.5.11	 Specification Of An Instance In a Part
 
 Source: [instanceSpec.json](https://github.com/edatasheets/edatasheets/blob/main/part-spec/common/instanceSpec.json)
 
@@ -205,7 +213,7 @@ Source: [instanceSpec.json](https://github.com/edatasheets/edatasheets/blob/main
 |instanceName|name of an instance of the part|String| |
 |instanceProperties|instance properties, as defined in the part specification|../common/coreProperties.json#/coreProperties| |
 
-####  4.5.11	 Specification Of a Package
+####  4.5.12	 Specification Of a Package
 
 Source: [package.json](https:/github.com/edatasheets/edatasheets/blob/main/part-spec/common/package.json)
 
@@ -217,7 +225,7 @@ Source: [package.json](https:/github.com/edatasheets/edatasheets/blob/main/part-
 |standardPackageSize|name of standard package size (imperial)|String| |
 |standardPackageType|name of standard package types|String| |
 
-####  4.5.12	 Specification Of Pinpaths Through An IC
+####  4.5.13	 Specification Of Pinpaths Through An IC
 
 Source: [pinPaths.json](https://github.com/edatasheets/edatasheets/blob/main/part-spec/common/pinPaths.json)
 
@@ -226,14 +234,14 @@ Source: [pinPaths.json](https://github.com/edatasheets/edatasheets/blob/main/par
 |numberOfPinPaths|number of pinPaths defined. This number should not be higher than the number of components included in the part|Number| |
 |partPinPaths|list of pins associated with each component in a multi-component part|array of #/$defs/partPinPaths|Yes|
 
-####  4.5.13	 PartPinPaths
+####  4.5.14	 PartPinPaths
 
 |Property|Description|JSON Data Type|Required?|
 |:----|:----|:----|:----|
 |componentName|name of a component within a part |String| |
 |componentPinNames|names of pins associated with each of the component in the part. Pin names must match the name used in part pin definition|array of String| |
 
-####  4.5.14	 Specification Of Pins
+####  4.5.15	 Specification Of Pins
 
 Source: [pinSpec.json](https://github.com/edatasheets/edatasheets/blob/main/part-spec/common/pinSpec.json)
 
@@ -248,7 +256,7 @@ Source: [pinSpec.json](https://github.com/edatasheets/edatasheets/blob/main/part
 |functionProperties|list of properties for each pin function configuration|array of #/$defs/functionProperties| |
 |pinPaths|information on pin paths - pins associated with each component in a multi-component part (such as A1,Y1 and A2,Y2)|../common/pinPaths.json#/pinPaths| |
 
-####  4.5.15	 ExternalComponents
+####  4.5.16	 ExternalComponents
 
 |Property|Description|JSON Data Type|Required?|
 |:----|:----|:----|:----|
@@ -256,14 +264,14 @@ Source: [pinSpec.json](https://github.com/edatasheets/edatasheets/blob/main/part
 |configuration|electrical configuration of component connected to pin with respect to the pin|String|Yes|
 |value|value of component|../common/values.json#/valueOptions| |
 
-####  4.5.16	 FunctionProperties
+####  4.5.17	 FunctionProperties
 
 |Property|Description|JSON Data Type|Required?|
 |:----|:----|:----|:----|
 |perFunctionName|name of the function of a pin|String| |
 |perFunctionProperties|list of pin properties that change based on the pin function configuration|#/$defs/pinProperties| |
 
-####  4.5.17	 PinProperties
+####  4.5.18	 PinProperties
 
 |Property|Description|JSON Data Type|Required?|
 |:----|:----|:----|:----|
@@ -283,14 +291,14 @@ Source: [pinSpec.json](https://github.com/edatasheets/edatasheets/blob/main/part
 |direction|direction of a pin|String| |
 |electricalConfiguration|electrical configuration of a pin|String| |
 |polarity|whether the active state of a pin is high or low|String| |
-|voltageOptions|list of voltage levels supported by a pin|Must set either Ref or Type| |
+|voltageOptions|list of voltage levels supported by a pin|../common/values.json#/valueOptions| |
 |floatUnused|description of whether pin can safely be floated if it is not used|Boolean| |
 |internalPullUp|indicates the value of an internal pull-up on a pin|../common/values.json#/valueOptions| |
 |internalPullDown|indicates the value of an internal pull-down on a pin|../common/values.json#/valueOptions| |
 |esd|indicates whether ESD protection exists on a pin|Boolean| |
 |externalComponents|list of external component structures recommended to be attached to a pin|array of #/$defs/externalComponents| |
 
-####  4.5.18	 Specification Of Power Fets Properties
+####  4.5.19	 Specification Of Power Fets Properties
 
 Source: [powerFetProperties.json](https://github.com/edatasheets/edatasheets/blob/main/part-spec/common/powerFetProperties.json)
 
@@ -300,7 +308,7 @@ Source: [powerFetProperties.json](https://github.com/edatasheets/edatasheets/blo
 |inputPowerFetPair|input power fet pair (in a buck-boost configuration)|#/$defs/powerFetPair| |
 |outputPowerFetPair|output power fet pair (in a buck-boost configuration)|#/$defs/powerFetPair| |
 
-####  4.5.19	 PowerFetPair
+####  4.5.20	 PowerFetPair
 
 |Property|Description|JSON Data Type|Required?|
 |:----|:----|:----|:----|
@@ -309,15 +317,9 @@ Source: [powerFetProperties.json](https://github.com/edatasheets/edatasheets/blo
 |rdsonHSFET|high side FET on-resistance|../common/values.json#/valueOptions| |
 |rdsonLSFET|low side FET on-resistance|../common/values.json#/valueOptions| |
 
-####  4.5.20	 Specification Of Power Sequencing Information
+####  4.5.21	 Specification Of Power Sequencing Information
 
 Source: [powerSequence.json](https:/github.com/edatasheets/edatasheets/blob/main/part-spec/common/powerSequence.json)
-
-|Property|Description|JSON Data Type|Required?|
-|:----|:----|:----|:----|
-|values|list of power sequence conditions that apply to a component|array of #/$defs/powerSequence| |
-
-####  4.5.21	 PowerSequence
 
 |Property|Description|JSON Data Type|Required?|
 |:----|:----|:----|:----|
@@ -328,7 +330,7 @@ Source: [powerSequence.json](https:/github.com/edatasheets/edatasheets/blob/main
 |signal2|signal that comes up second in the sequence |String| |
 |signal2TerminalIdentifiers|list of component pins associated with signal 2|array of String| |
 |timeCondition|time between the signal 1 and signal 2 events|../common/values.json#/valueOptions| |
-|powerDirection|whether this is a power up or power down event|Must set either Ref or Type| |
+|powerDirection|whether this is a power up or power down event|String| |
 |nextPowerState|power state the device enters after the signal transition|String| |
 |currentPowerState|power state the device is currently in before the signal transition|String| |
 |riseTime|time for a signal to go from low to high (only applies to one signal)|../common/values.json#/valueOptions| |
@@ -659,7 +661,7 @@ Source: [usbc_portcontroller.json](https://github.com/edatasheets/edatasheets/bl
 |powerRoleSupported|roles supported by pd controller|String| |
 |fastRoleSwapSupport|whether the port controller supports fast role swap (FRS)|Boolean| |
 |vconnPowerSupport|whether the port controller has support for vconn power|Boolean| |
-|vconnFetOnResistance|on-resistance of the integrated Vconn FET|..common/values.json#/valueOptions| |
+|vconnFetOnResistance|on-resistance of the integrated Vconn FET|../common/values.json#/valueOptions| |
 |vconnPowerLimit|power limit supported by internal vconn switch (if supported)|../common/values.json#/valueOptions| |
 |vconnMaxCurrent|maximum continuous current supported by internal vconn switch (if supported)|../common/values.json#/valueOptions| |
 |vconnOverCurrentLimit|over current limit supported by internal vconn switch (if supported)|../common/values.json#/valueOptions| |
